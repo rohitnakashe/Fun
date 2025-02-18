@@ -1,17 +1,17 @@
 import os
 
 def generate_priority_encoder(num_inputs):
-    # Calculate number of output bits (bit length of num_inputs - 1)
+    # Calculate the number of output bits for the initial encoder (log2(num_inputs) rounded up)
     n = (num_inputs - 1).bit_length()  # Log2(num_inputs) rounded up
     
     if n % 2 != 0:
         raise ValueError("n must be even")
-    
+
     def write_file(filename, content):
         with open(filename, "w") as f:
             f.write(content)
     
-    def generate_pe_module(num_inputs):
+    def generate_pe_module(num_inputs, n):
         if num_inputs == 4:
             content = """module priority_encoder_4_to_2(
   input  [3:0] in,
@@ -69,11 +69,12 @@ endmodule
         
         write_file(f"{current_pe_name}.v", content)
         
-        # Recursively generate for smaller encoders
+        # Recursively generate for smaller encoders, updating 'n' each time
         if lower_pe_size >= 4:
-            generate_pe_module(lower_pe_size)
+            generate_pe_module(lower_pe_size, n - 2)
     
-    generate_pe_module(num_inputs)
+    # Start the generation process with the initial values
+    generate_pe_module(num_inputs, n)
     print("Generated Verilog files.")
 
 # Example usage
