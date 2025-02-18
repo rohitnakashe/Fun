@@ -37,7 +37,7 @@ def generate_bit_adder_module(bit_size):
 module {bit_size}_bit_adder(
   input bit [{bit_size-1}:0] A, B,
   input bit Cin,
-  output bit [{bit_size}:0] sum,
+  output bit [{bit_size-1}:0] sum,
   output cout);
 
   wire {', '.join([f'c{i}' for i in range(1, bit_size)])};
