@@ -49,7 +49,7 @@ endmodule
   {lower_pe_name} pe2 (.in(in[{3 * lower_pe_size - 1}:{2 * lower_pe_size}]), .out(out2), .valid(valid2));
   {lower_pe_name} pe3 (.in(in[{4 * lower_pe_size - 1}:{3 * lower_pe_size}]), .out(out3), .valid(valid3));
 
-  {lower_pe_name} pe_upper (
+  priority_encoder_4_to_2  pe_upper (
     .in({{valid3, valid2, valid1, valid0}}),
     .out(out_upper),
     .valid(valid)
