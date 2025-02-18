@@ -35,9 +35,9 @@ def generate_bit_adder_module(bit_size):
     # Create the module for a specific bit_size, with dynamic module name
     bit_adder_module = f"""
 module {bit_size}_bit_adder(
-  input bit [{bit_size-1}:0] A, B,
-  input bit Cin,
-  output bit [{bit_size-1}:0] sum,
+  input [{bit_size-1}:0] A, B,
+  input Cin,
+  output reg [{bit_size-1}:0] sum,
   output cout);
 
   wire {', '.join([f'c{i}' for i in range(1, bit_size)])};
@@ -64,7 +64,7 @@ def save_verilog_file(file_name, code):
 
 
 # Get the Verilog code for the different modules
-bit_size = 6
+bit_size = 5
 fa_code = generate_fa_module()
 ha_code = generate_ha_module()
 bit_adder_code = generate_bit_adder_module(bit_size)
